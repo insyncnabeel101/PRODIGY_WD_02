@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Stopwatch Application</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="stopwatch-container">
+        <div class="outer-ring">
+            <div class="inner-circle">
+                <div class="time-display" id="display">00:00:00<span class="ms">.00</span></div>
+            </div>
+        </div>
+
+        <div class="control-buttons">
+            <button id="lapResetBtn" class="btn btn-secondary" disabled>Lap</button>
+            <button id="startPauseBtn" class="btn btn-start">Start</button>
+        </div>
+
+        <div class="laps-container" id="lapsContainer">
+            <div class="laps-header">
+                <span>Lap</span>
+                <span>Split Time</span>
+            </div>
+            <ul class="laps-list" id="lapsList"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

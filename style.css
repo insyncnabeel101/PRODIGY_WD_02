@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1e38 100%);
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --neon-cyan: #06b6d4;
+    --neon-rose: #f43f5e;
+    --text-main: #f8fafc;
+    --text-muted: #64748b;
+}
+
+body {
+    background: var(--bg-gradient);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+.stopwatch-container {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 40px;
+    border-radius: 32px;
+    width: 380px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Outer Dynamic Progress/Glow Ring */
+.outer-ring {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: padding-box, linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+    border: 2px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: box-shadow 0.5s ease;
+}
+
+/* Active breathing state triggered via JS */
+.outer-ring.running {
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.25), inset 0 0 20px rgba(6, 182, 212, 0.1);
+    border-image: linear-gradient(to bottom, var(--neon-cyan), transparent) 1;
+}
+
+.inner-circle {
+    width: 220px;
+    height: 220px;
+    background: #0f172a;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 4px 12px rgba(0,0,0,0.6);
+}
+
+/* Monospace font prevents text shifting layout while counting */
+.time-display {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 38px;
+    color: var(--text-main);
+    letter-spacing: 1px;
+}
+
+.time-display .ms {
+    font-size: 24px;
+    color: var(--neon-cyan);
+}
+
+/* Button Layout & Interaction */
+.control-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 35px;
+    gap: 20px;
+}
+
+.btn {
+    flex: 1;
+    padding: 14px 0;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-start {
+    background-color: var(--neon-cyan);
+    color: #0f172a;
+    box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+}
+
+.btn-start:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.btn-pause {
+    background-color: var(--neon-rose);
+    color: var(--text-light);
+    box-shadow: 0 4px 14px rgba(244, 63, 94, 0.3);
+}
+
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: var(--text-main);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Lap Management Panel Layout */
+.laps-container {
+    width: 100%;
+    margin-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 20px;
+    display: none; /* Hidden until data populates */
+}
+
+.laps-header {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.laps-list {
+    list-style: none;
+    max-height: 160px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Custom Scrollbar styling for sleek UI consistency */
+.laps-list::-webkit-scrollbar {
+    width: 4px;
+}
+.laps-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+}
+
+.laps-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
